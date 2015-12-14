@@ -1,0 +1,6 @@
+<resources>
+	<string name="app_name">PozzoTools</string>
+
+	<string name="always">Always</string>
+	<string name="hugePostCostWarning">Huge data transfer may infer costs, proceed?</string>
+</resources>
