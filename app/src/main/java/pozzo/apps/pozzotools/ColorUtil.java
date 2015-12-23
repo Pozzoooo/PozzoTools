@@ -11,9 +11,11 @@ import android.graphics.Color;
 public class ColorUtil {
 
 	/**
-	 * @param color a ser clareada.
-	 * @param factor que sera clareado.
-	 * @return Nova cor.
+	 * Make color lighter than the given one by the factor.
+	 *
+	 * @param color to be lightened.
+	 * @param factor amount to lighter.
+	 * @return Lighter color.
 	 */
 	public static int lighter(int color, float factor) {
 		int red = (int) ((Color.red(color) * (1 - factor) / 255 + factor) * 255);
@@ -23,11 +25,13 @@ public class ColorUtil {
 	}
 
 	/**
-	 * @param color a ser escurecida.
-	 * @param factor que sera escurecido.
-	 * @return Nova cor.
+	 * Make color darker than the given one by the factor.
+	 *
+	 * @param color to be darkened.
+	 * @param factor amount to darker.
+	 * @return Darker color.
 	 */
-	public static int darker (int color, float factor) {
+	public static int darker(int color, float factor) {
 		int a = Color.alpha(color);
 		int r = Color.red(color);
 		int g = Color.green(color);
