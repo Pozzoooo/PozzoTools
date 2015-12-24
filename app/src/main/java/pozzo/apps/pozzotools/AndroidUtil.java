@@ -12,12 +12,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.MimeTypeMap;
 import android.widget.ScrollView;
 
 import java.io.File;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Utility tools related to Android.
@@ -90,7 +88,6 @@ public class AndroidUtil {
 
 		NetworkInfo networkInfo = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 		return networkInfo != null && networkInfo.isConnected();
-
 	}
 
 	/**
@@ -122,10 +119,10 @@ public class AndroidUtil {
 	 * Calls any compatible application to open the given file url (web or local).
 	 *
 	 * @return true if there is an app to open this path.
+	 *
+	 * @see FileUtil#getMimeType(String)
 	 */
-	public static boolean viewFile(String path, Context context) {
-		String mimeType = getMimeType(path);
-
+	public static boolean viewFile(String path, String mimeType, Context context) {
 		Uri uri = Uri.parse(path);
 		Intent intent = new Intent(Intent.ACTION_VIEW);
 		intent.setDataAndType(uri, mimeType);
@@ -137,21 +134,6 @@ public class AndroidUtil {
 			return true;
 		}
 		return false;
-	}
-
-	/**
-	 * @return Extension from the given file.
-	 */
-	public static String getFileExtension(String filePath) {
-		return filePath.substring(filePath.lastIndexOf(".") + 1);
-	}
-
-	/**
-	 * @return MimeType from given path.
-	 */
-	public static String getMimeType(String filePath) {
-		return MimeTypeMap.getSingleton().getMimeTypeFromExtension(
-				getFileExtension(filePath).toLowerCase(Locale.US));
 	}
 
 	/**
