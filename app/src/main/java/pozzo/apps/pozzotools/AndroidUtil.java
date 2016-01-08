@@ -56,12 +56,22 @@ public class AndroidUtil {
 
 	/**
 	 * Redirect to any link.
+	 * It is not common to miss a browser, but it may happen especially in non personal devices.
+	 *
+	 * @return true if succed.
 	 */
-	public static void redirectLink(String link, Context context) {
+	public static boolean redirectLink(String link, Context context) {
 		if(context == null)
-			return;
+			return false;
 
-		context.startActivity(redirectLinkIntent(link, context));
+		Intent intent = redirectLinkIntent(link, context);
+		PackageManager manager = context.getPackageManager();
+		List<ResolveInfo> infos = manager.queryIntentActivities(intent, 0);
+		if (infos.size() > 0) {
+			context.startActivity(intent);
+			return false;
+		}
+		return true;
 	}
 
 	/**
