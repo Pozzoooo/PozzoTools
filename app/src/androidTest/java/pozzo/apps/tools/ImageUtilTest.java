@@ -1,4 +1,4 @@
-package pozzo.apps.pozzotools;
+package pozzo.apps.tools;
 
 import android.graphics.BitmapFactory;
 
