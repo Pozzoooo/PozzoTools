@@ -1,13 +1,11 @@
 package pozzo.apps.tools;
 
-import junit.framework.TestCase;
-
 /**
  * Test case to ColorUtil.
  *
  * Created by Pozzo on 23/12/15.
  */
-public class ColorUtilTest /*extends TestCase*/ {
+public class ColorUtilTest {
 
 	/*
 	Cannot test without Android =[

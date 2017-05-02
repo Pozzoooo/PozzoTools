@@ -1,11 +1,15 @@
 package pozzo.apps.tools;
 
 import android.app.AlertDialog;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.telephony.TelephonyManager;
+
+import java.io.File;
 
 /**
  * Some checks that may be used to create a better experience an control by user side.
@@ -13,7 +17,7 @@ import android.telephony.TelephonyManager;
  * @author pozzo
  * @since 13/08/15.
  */
-public class AndroidChecks {
+public class NetworkUtil {
 
 	/**
 	 * Show a dialog requesting if users wants to keep on with operation if bytes to be sent are
@@ -28,7 +32,7 @@ public class AndroidChecks {
 											 final String hugePostCostWarning) {
 		long warningSize = 1024 * 1024;
 		if(!AndroidPrefs.isShowMobileNetworkWarn(context)
-				|| !AndroidUtil.isMobileNetwork(context)
+				|| !isMobileNetwork(context)
 				|| bytes < warningSize) {
 			onPositive.onClick(null, 0);
 			return;
@@ -112,5 +116,66 @@ public class AndroidChecks {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * @return true if you are connecting on a mobile network.
+	 */
+	public static boolean isMobileNetwork(Context context) {
+		if (context == null)
+			return false;
+
+		ConnectivityManager manager = (ConnectivityManager)
+				context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		if (manager == null)
+			return false;
+
+		NetworkInfo networkInfo = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+		return networkInfo != null && networkInfo.isConnected();
+	}
+
+	/**
+	 * @return true se aparentemete houver conexao.
+	 */
+	public static boolean isNetworkAvailable(Context context) {
+		if(context == null)
+			return false;
+
+		ConnectivityManager connectivityManager
+				= (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+		return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+	}
+
+	/**
+	 * Download single file using DownloadManager.
+	 */
+	public static File downloadFile(Context context, String path, Uri downloadUri, String fileName) {
+		if(path == null || path.isEmpty())
+			return null;
+
+		File file = new File(path);
+		if (!file.exists()) {
+			try {
+				DownloadManager downloadManager = (DownloadManager)
+						context.getSystemService(Context.DOWNLOAD_SERVICE);
+				DownloadManager.Request request = new DownloadManager.Request(downloadUri);
+
+				request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI
+						| DownloadManager.Request.NETWORK_MOBILE);
+				request.setAllowedOverRoaming(false);
+				request.setTitle(fileName);
+				request.setDescription(path);
+				request.setDestinationUri(Uri.fromFile(file));
+				request.allowScanningByMediaScanner();
+				request.setNotificationVisibility(
+						DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+
+				downloadManager.enqueue(request);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return file;
 	}
 }

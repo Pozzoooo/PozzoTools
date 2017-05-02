@@ -1,20 +1,16 @@
 package pozzo.apps.tools;
 
 import android.app.Activity;
-import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ScrollView;
 
-import java.io.File;
 import java.util.List;
 
 /**
@@ -60,11 +56,11 @@ public class AndroidUtil {
 	 *
 	 * @return true if succed.
 	 */
-	public static boolean redirectLink(String link, Context context) {
+	public static boolean redirectToLink(String link, Context context) {
 		if(context == null)
 			return false;
 
-		Intent intent = redirectLinkIntent(link, context);
+		Intent intent = redirectToLinkIntent(link, context);
 		PackageManager manager = context.getPackageManager();
 		List<ResolveInfo> infos = manager.queryIntentActivities(intent, 0);
 		if (infos.size() > 0) {
@@ -77,40 +73,11 @@ public class AndroidUtil {
 	/**
 	 * Intent para redirecionar para o link passado.
 	 */
-	public static Intent redirectLinkIntent(String link, Context context) {
+	public static Intent redirectToLinkIntent(String link, Context context) {
 		if(context == null)
 			return null;
 
 		return new Intent(Intent.ACTION_VIEW, Uri.parse(link));
-	}
-
-	/**
-	 * @return true if you are connecting on a mobile network.
-	 */
-	public static boolean isMobileNetwork(Context context) {
-		if (context == null)
-			return false;
-
-		ConnectivityManager manager = (ConnectivityManager)
-				context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		if (manager == null)
-			return false;
-
-		NetworkInfo networkInfo = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-		return networkInfo != null && networkInfo.isConnected();
-	}
-
-	/**
-	 * @return true se aparentemete houver conexao.
-	 */
-	public static boolean isNetworkAvailable(Context context) {
-		if(context == null)
-			return false;
-
-		ConnectivityManager connectivityManager
-				= (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-		return activeNetworkInfo != null && activeNetworkInfo.isConnected();
 	}
 
 	/**
@@ -132,7 +99,7 @@ public class AndroidUtil {
 	 *
 	 * @see FileUtil#getMimeType(String)
 	 */
-	public static boolean viewFile(String path, String mimeType, Context context) {
+	public static boolean openFileInThirdApp(String path, String mimeType, Context context) {
 		Uri uri = Uri.parse(path);
 		Intent intent = new Intent(Intent.ACTION_VIEW);
 		intent.setDataAndType(uri, mimeType);
@@ -144,38 +111,6 @@ public class AndroidUtil {
 			return true;
 		}
 		return false;
-	}
-
-	/**
-	 * Download single file using DownloadManager.
-	 */
-	public static File downloadFile(Context context, String path, Uri downloadUri, String fileName) {
-		if(path == null || path.isEmpty())
-			return null;
-
-		File file = new File(path);
-		if (!file.exists()) {
-			try {
-				DownloadManager downloadManager = (DownloadManager)
-						context.getSystemService(Context.DOWNLOAD_SERVICE);
-				DownloadManager.Request request = new DownloadManager.Request(downloadUri);
-
-				request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI
-						| DownloadManager.Request.NETWORK_MOBILE);
-				request.setAllowedOverRoaming(false);
-				request.setTitle(fileName);
-				request.setDescription(path);
-				request.setDestinationUri(Uri.fromFile(file));
-				request.allowScanningByMediaScanner();
-				request.setNotificationVisibility(
-						DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-
-				downloadManager.enqueue(request);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return file;
 	}
 
 	/**
