@@ -23,7 +23,9 @@ public class AndroidChecks {
 	 */
 	public void checkUserWantsToSendWithSize(final Context context, long bytes,
 											 final DialogInterface.OnClickListener onPositive,
-											 final DialogInterface.OnClickListener onNegative) {
+											 final DialogInterface.OnClickListener onNegative,
+											 final String alwaysText,
+											 final String hugePostCostWarning) {
 		long warningSize = 1024 * 1024;
 		if(!AndroidPrefs.isShowMobileNetworkWarn(context)
 				|| !AndroidUtil.isMobileNetwork(context)
@@ -35,14 +37,14 @@ public class AndroidChecks {
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setPositiveButton(android.R.string.ok, onPositive);
 		builder.setNegativeButton(android.R.string.cancel, onNegative);
-		builder.setNeutralButton(R.string.always, new DialogInterface.OnClickListener() {
+		builder.setNeutralButton(alwaysText, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				AndroidPrefs.setShowMobileNetworkWarn(context, true);
 				onPositive.onClick(dialog, which);
 			}
 		});
-		builder.setTitle(R.string.hugePostCostWarning);
+		builder.setTitle(hugePostCostWarning);
 		builder.create().show();
 	}
 

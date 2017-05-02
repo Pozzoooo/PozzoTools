@@ -1,0 +1,5 @@
+<resources>
+	<string name="app_name">Personal Tools</string>
+	<string name="reboot">Reboot</string>
+	<string name="ifconfig">ifconfig</string>
+</resources>
