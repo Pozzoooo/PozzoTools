@@ -1,9 +1,7 @@
 package pozzo.apps.tools;
 
-import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -18,39 +16,6 @@ import java.io.File;
  * @since 13/08/15.
  */
 public class NetworkUtil {
-
-	/**
-	 * Show a dialog requesting if users wants to keep on with operation if bytes to be sent are
-	 * 	greater than a cetain limit.
-	 *
-	 * 	@param bytes to be sent.
-	 */
-	public void checkUserWantsToSendWithSize(final Context context, long bytes,
-											 final DialogInterface.OnClickListener onPositive,
-											 final DialogInterface.OnClickListener onNegative,
-											 final String alwaysText,
-											 final String hugePostCostWarning) {
-		long warningSize = 1024 * 1024;
-		if(!AndroidPrefs.isShowMobileNetworkWarn(context)
-				|| !isMobileNetwork(context)
-				|| bytes < warningSize) {
-			onPositive.onClick(null, 0);
-			return;
-		}
-
-		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		builder.setPositiveButton(android.R.string.ok, onPositive);
-		builder.setNegativeButton(android.R.string.cancel, onNegative);
-		builder.setNeutralButton(alwaysText, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				AndroidPrefs.setShowMobileNetworkWarn(context, true);
-				onPositive.onClick(dialog, which);
-			}
-		});
-		builder.setTitle(hugePostCostWarning);
-		builder.create().show();
-	}
 
 	/**
 	 * Get the network info
