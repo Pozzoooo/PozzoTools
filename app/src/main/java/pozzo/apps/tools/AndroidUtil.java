@@ -1,7 +1,9 @@
 package pozzo.apps.tools;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -138,5 +140,41 @@ public class AndroidUtil {
 			return model;
 		}
 		return manufacturer + " " + model;
+	}
+
+	/**
+	 * Redirect to any link.
+	 *
+	 * @return true if succeed.
+	 */
+	public static boolean openUrl(String link, Context context) {
+		if(context == null)
+			return false;
+
+		Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+
+		PackageManager manager = context.getPackageManager();
+		List<ResolveInfo> infos = manager.queryIntentActivities(intent, 0);
+		if (infos.size() > 0) {
+			context.startActivity(intent);
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Exibe uma mensagem de erro.
+	 */
+	public static AlertDialog.Builder errorMessage(
+			Context context, String errorMessage, int errorTitle, int okButton) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		builder.setTitle(errorTitle);
+		builder.setMessage(errorMessage);
+		builder.setPositiveButton(okButton, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.dismiss();
+			}
+		});
+		return builder;
 	}
 }
