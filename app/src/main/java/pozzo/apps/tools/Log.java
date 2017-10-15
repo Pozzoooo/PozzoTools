@@ -9,11 +9,13 @@ package pozzo.apps.tools;
  * @since 09/02/16
  */
 public class Log {
+	public static boolean SHOW_LOGS = true;
+
 	/**
 	 * Just a debug message.
 	 */
 	public static void d(String msg) {
-		if(BuildConfig.DEBUG)
+		if(SHOW_LOGS)
 			System.out.println(msg);
 	}
 
@@ -22,7 +24,7 @@ public class Log {
 	 */
 	public static void e(Exception e) {
 //		Mint.logException(e);
-		if(BuildConfig.DEBUG)
+		if(SHOW_LOGS)
 			e.printStackTrace();
 	}
 
@@ -31,7 +33,7 @@ public class Log {
 	 */
 	public static void e(Exception e, String key, String value) {
 //		Mint.logExceptionMessage(key, value, e);
-		if(BuildConfig.DEBUG) {
+		if(SHOW_LOGS) {
 			System.out.println(key + ": " + value);
 			e.printStackTrace();
 		}
@@ -42,7 +44,7 @@ public class Log {
 	 */
 	public static void event(String event) {
 //		Mint.logEvent(event);
-		if(BuildConfig.DEBUG)
+		if(SHOW_LOGS)
 			System.out.println(event);
 	}
 
@@ -51,7 +53,7 @@ public class Log {
 	 */
 	public static void breadcrumb(String breadcrumb) {
 //		Mint.leaveBreadcrumb(breadcrumb);
-		if(BuildConfig.DEBUG)
+		if(SHOW_LOGS)
 			System.out.println("breadcrumb: " + breadcrumb);
 	}
 }
