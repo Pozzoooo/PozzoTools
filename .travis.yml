@@ -7,6 +7,4 @@ android:
     - extra-android-m2repository
 
   script:
-    - ./gradlew clean testDebugUnitTest
-    - ./gradlew test --continue
-
+    - ./gradlew app:clean app:testDebugUnitTest app:test --continue --no-daemon
