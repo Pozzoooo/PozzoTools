@@ -8,7 +8,7 @@ package pozzo.apps.tools;
  * @author Luiz Gustavo Pozzo
  * @since 09/02/16
  */
-class Log {
+public class Log {
 	/**
 	 * Just a debug message.
 	 */
