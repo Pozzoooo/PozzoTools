@@ -152,6 +152,7 @@ public class AndroidUtil {
 			return false;
 
 		Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
 		PackageManager manager = context.getPackageManager();
 		List<ResolveInfo> infos = manager.queryIntentActivities(intent, 0);
