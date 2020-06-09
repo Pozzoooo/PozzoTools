@@ -7,4 +7,3 @@ Some tools for future consultation
 
 Well to be honest I'm not anymore happy with Util approach, its too messy.
 I need more structured way to provide tools, or at least rise the organization.
-
