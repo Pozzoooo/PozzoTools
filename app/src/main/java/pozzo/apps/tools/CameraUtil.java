@@ -17,11 +17,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import pozzo.apps.tools.android.AndroidUtil;
+
 /**
  * Solves the call to a camera application and deal with return, if you ask.
- *
- * @since 2012
- * @author Luiz Gustavo Pozzo
  */
 public class CameraUtil {
 	private Context context;
