@@ -6,8 +6,6 @@ import junit.framework.TestCase;
 
 /**
  * Some tests on ImageUtil.
- *
- * Created by sarge on 24/12/15.
  */
 public class ImageUtilTest extends TestCase {
 

@@ -1,12 +1,8 @@
 package pozzo.apps.tools;
 
-import android.test.AndroidTestCase;
-
 /**
  * Test our HTML utils.
  * Cant test without Android Mock =[
- *
- * Created by Pozzo on 22/12/15.
  */
 public class HtmlUtilTest /*extends AndroidTestCase*/ {
 

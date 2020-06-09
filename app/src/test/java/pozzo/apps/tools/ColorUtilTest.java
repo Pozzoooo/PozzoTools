@@ -2,8 +2,6 @@ package pozzo.apps.tools;
 
 /**
  * Test case to ColorUtil.
- *
- * Created by Pozzo on 23/12/15.
  */
 public class ColorUtilTest {
 
