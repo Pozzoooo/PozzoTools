@@ -72,7 +72,7 @@ public class CameraUtil {
 	 * @param resultCode to be tracked at onActivityResult.
 	 * @throws UnsupportedOperationException If camera is not abailable.
 	 */
-	public void takeAPicture(int resultCode, android.support.v4.app.Fragment fragment)
+	public void takeAPicture(int resultCode, androidx.fragment.app.Fragment fragment)
 			throws IOException, UnsupportedOperationException {
 		if(!isCameraAvailable()) {
 			throw new UnsupportedOperationException("Camera not abailable");
@@ -150,7 +150,7 @@ public class CameraUtil {
 	/**
 	 * Sends the intent request.
 	 */
-	private void dispatchTakePictureIntent(Intent takePictureIntent, int actionCode, android.support.v4.app.Fragment fragment) {
+	private void dispatchTakePictureIntent(Intent takePictureIntent, int actionCode, androidx.fragment.app.Fragment fragment) {
 		fragment.startActivityForResult(takePictureIntent, actionCode);
 	}
 
