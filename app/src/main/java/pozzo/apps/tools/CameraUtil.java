@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import pozzo.apps.tools.android.AndroidUtil;
+import pozzo.apps.tools.android.Android;
 
 /**
  * Solves the call to a camera application and deal with return, if you ask.
@@ -87,7 +87,7 @@ public class CameraUtil {
 	 */
 	public boolean isCameraAvailable() {
 		return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)
-				&& AndroidUtil.isIntentAvailable(context, MediaStore.ACTION_IMAGE_CAPTURE);
+				&& Android.Companion.invoke().isIntentAvailable(context, MediaStore.ACTION_IMAGE_CAPTURE);
 	}
 
 	/**
